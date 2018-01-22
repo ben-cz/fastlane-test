@@ -21,11 +21,6 @@ or alternatively using `brew cask install fastlane`
 fastlane ios betaStage
 ```
 Description of what the lane does
-### ios betaProd
-```
-fastlane ios betaProd
-```
-
 
 ----
 
