@@ -26,19 +26,9 @@ platform :ios do
 
     increment_version_number # Automatically increment patch version number
     increment_build_number # automatically increment by one
-
-
-    #build your iOS app
-    gym(
-      output_directory: 'Exports_Stage',
-      export_xcargs: "-allowProvisioningUpdates",
-      export_options: {
-        compileBitcode: false,
-      }
-    )
     
     change_log = change_log_since_last_tag
-    print change_log
+    puts change_log
     
     add_git_tag
   end
@@ -46,14 +36,6 @@ platform :ios do
   lane :betaProd do
     clear_derived_data
     xcclean
-
-    gym(
-      output_directory: 'Exports_Prod',
-      export_xcargs: "-allowProvisioningUpdates",
-      export_options: {
-        compileBitcode: false,
-      }
-    )
     
     change_log = change_log_since_last_tag
     print change_log 
