@@ -16,9 +16,9 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios betaStage
+### ios release
 ```
-fastlane ios betaStage
+fastlane ios release
 ```
 Description of what the lane does
 

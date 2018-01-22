@@ -23,30 +23,85 @@ platform :ios do
   #   )
   # end
   
-  lane :betaStage do
+  TAG_GROUPING = "builds"
+  
+  def clear
     clear_derived_data
     xcclean
-
-    increment_version_number # Automatically increment patch version number
-    increment_build_number # automatically increment by one
-    
-    change_log = changelog_from_git_commits(
+  end
+  
+  def get_change_log(grouping, lane)
+    changelog_from_git_commits(
       pretty: '%h %s',
-      tag_match_pattern: "builds\/iosbetaStage\/*"
+      tag_match_pattern: "#{grouping}/#{lane}/*"
+    ) 
+  end
+  
+  def add_tag(grouping, lane, build_number)
+    add_git_tag(
+      tag: "#{grouping}/#{lane}/#{build_number}"
     )
-    UI.message change_log
-    
   end
 
-  # lane :betaProd do
-  #   clear_derived_data
-  #   xcclean
-  #
-  #   change_log = changelog_from_git_commits(
-  #     pretty: '%h %s',
-  #     tag_match_pattern: "builds/iosbetaProd/*"
-  #   )
-  #   UI.message change_log
-  #
-  # end
+  # fastlane release betaProd:BOOL betaStageGcloud:BOOL itunesConnect:BOOL
+  lane :release do |options|
+    increment_version_number
+    increment_build_number
+    
+    #release betaStage allways
+    betaStage
+    buildTo = "Fabric Stage"
+
+    if options[:betaProd]
+      betaProd
+      buildTo += "& Fabric Prod"
+    end
+    if options[:betaStageGcloud]
+      betaStageGcloud
+      buildTo += "& Fabric Stage Gcloud"
+    end
+    if options[:itunesConnect]
+      itunesConnect
+      buildTo += "& ItunesConnect"
+    end
+    
+    commit_version_bump(
+      message: "#{buildTo} build: #{get_build_number} version: #{get_version_number}"
+    )
+    push_to_git_remote(
+      local_branch: "develop",
+    )
+  end
+  
+  private_lane :betaStage do
+    clear
+    
+    lane_name = "betaStage"
+    change_log = get_change_log(TAG_GROUPING, lane_name)
+    add_tag(TAG_GROUPING, lane_name, get_build_number)
+  end
+  
+  private_lane :betaProd do
+    clear
+    
+    lane_name = "betaProd"
+    change_log = get_change_log(TAG_GROUPING, lane_name)
+    add_tag(TAG_GROUPING, lane_name, get_build_number)
+  end
+  
+  private_lane :betaStageGcloud do
+    clear
+    
+    lane_name = "betaStageGcloud"
+    change_log = get_change_log(TAG_GROUPING, lane_name)
+    add_tag(TAG_GROUPING, lane_name, get_build_number)
+  end
+  
+  private_lane :itunesConnect do
+    clear
+    
+    lane_name = "itunesConnect"
+    change_log = get_change_log(TAG_GROUPING, lane_name)
+    add_tag(TAG_GROUPING, lane_name, get_build_number)
+  end
 end
