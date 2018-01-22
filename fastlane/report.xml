@@ -5,37 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.008622">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.009059">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: clear_derived_data" time="0.43437">
+      <testcase classname="fastlane.lanes" name="1: clear_derived_data" time="0.424296">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: xcclean" time="1.476044">
+      <testcase classname="fastlane.lanes" name="2: xcclean" time="2.145749">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: increment_version_number" time="0.949046">
+      <testcase classname="fastlane.lanes" name="3: changelog_from_git_commits" time="0.067562">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: increment_build_number" time="1.436811">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: changelog_from_git_commits" time="0.07233">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: add_git_tag" time="0.031532">
+      <testcase classname="fastlane.lanes" name="4: add_git_tag" time="15.843103">
         
       </testcase>
     
